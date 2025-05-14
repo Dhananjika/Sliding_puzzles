@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5fe8e8b3-1427-4393-9463-2d2e43b8f6f7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2fP8DMScAe43vGW1kCKnHKUmrBT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/CourseWork/Y2 - Semester 2/Algorithm - CW/w1959653_Dhananjika_Niwarthani/w1959653_Dhananjika_Niwarthani_Java_code",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CourseWork\Y2 - Semester 2\Algorithm - CW\w1959653_Dhananjika_Niwarthani\w1959653_Algo_CW\src\example" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5fe8e8b3-1427-4393-9463-2d2e43b8f6f7" name="Changes" comment="" />
+      <created>1713691232129</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713691232129</updated>
+      <workItem from="1713691233151" duration="7193000" />
+      <workItem from="1713702418544" duration="279000" />
+      <workItem from="1713714481841" duration="3818000" />
+      <workItem from="1713763602166" duration="4008000" />
+      <workItem from="1713796514709" duration="1275000" />
+      <workItem from="1713847224749" duration="7856000" />
+      <workItem from="1713858180132" duration="1624000" />
+      <workItem from="1713863581580" duration="739000" />
+      <workItem from="1713878775622" duration="71000" />
+      <workItem from="1713879418763" duration="123000" />
+      <workItem from="1713880227755" duration="6144000" />
+      <workItem from="1713886910100" duration="2247000" />
+      <workItem from="1713896162656" duration="29000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

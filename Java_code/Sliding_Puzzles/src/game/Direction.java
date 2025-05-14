@@ -1,0 +1,21 @@
+package game;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Author - DISSANAYAKA MUDIYANSELAGE DHANANJIKA NIWARTHANI
+ */
+
+public class Direction {
+	// save directions
+	private List<String> direction = new ArrayList<>();
+
+	public List<String> getDirection() {
+		return direction;
+	}
+
+	public void setDirection(List<String> direction) {
+		this.direction = direction;
+	}
+}

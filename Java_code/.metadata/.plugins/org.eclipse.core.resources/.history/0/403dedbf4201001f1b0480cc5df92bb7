@@ -1,0 +1,210 @@
+package game;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Main {
+	public static List<Position> path = new ArrayList<Position>(); // save solved path point
+	public static List<String> directions = new ArrayList<>(); // save solved path point directions
+	public static Direction direction = new Direction(); // save directions
+
+	public static void main(String[] args) {
+		setDirectionList(direction);
+		// file directory for examples
+		// final String FILEPATH = "w1959653_Algo_CW/src/example/maze10_1.txt";
+
+		// File directory for benchmark_series
+		// final String FILEPATH =
+		// "w1959653_Algo_CW/src/benchmark_series/puzzle_40.txt";
+
+		// File directory for test_files
+		final String FILEPATH = "w1959653_Algo_CW/src/testFiles/test_1.txt";
+
+		// get file
+		File file = new File(FILEPATH);
+
+		// check if file exists
+		if (file.exists()) {
+			String fileName = file.getName();
+
+			System.out.println("\nFile Name: " + fileName + "\n");
+
+			// load map
+			Map scannedMap = MapParser.parseMapFromFile(FILEPATH);
+
+			// find path
+			int moveCount = findPath(scannedMap.getMap2D(), scannedMap.getStartPointHorizontal(),
+					scannedMap.getStartPointVertical(), scannedMap.getEndPointHorizontal(),
+					scannedMap.getEndPointVertical());
+
+			// reverse list elements
+			Collections.reverse(path);
+			Collections.reverse(directions);
+
+			// print result
+			printResult(path, directions, moveCount);
+		} else {
+			System.out.println("File not found: " + FILEPATH);
+			System.out.println("Absolute File Path: " + file.getAbsolutePath());
+		}
+	}
+
+	/* this method will set the direction arrayList */
+	private static void setDirectionList(Direction direction) {
+		List<String> list = new ArrayList<>();
+		list.add("LEFT");
+		list.add("RIGHT");
+		list.add("UP");
+		list.add("DOWN");
+
+		direction.setDirection(list);
+	}
+
+	/* this method will find the shortest path between given positions */
+	public static int findPath(int[][] map, int startPointX, int startPointY, int endPointX, int endPointY) {
+
+		path.clear(); // Clear previously saved paths
+		directions.clear(); // Clear previously saved directions
+
+		Position startPosition = new Position(startPointX, startPointY);
+
+		// Main queue
+		LinkedList<Position> mainQueue = new LinkedList<>();
+
+		// Store visited points
+		Position[][] mazeMapPositions = new Position[map.length][map[0].length];
+
+		mainQueue.addLast(startPosition);
+		mazeMapPositions[startPointX][startPointY] = startPosition;
+
+		if (startPointX == endPointX && startPointY == endPointY) {
+			System.out.println("Start is same as End. No path needed!");
+		} else {
+
+			while (mainQueue.size() != 0) {
+
+				// get the first element in the mainQueue
+				Position currentPosition = mainQueue.pollFirst();
+
+				// slide in 4 directions from current position
+				for (int i = 0; i < direction.getDirection().size(); i++) {
+
+					// get the next possible position
+					Position nextPosition = navigate(map, mazeMapPositions, currentPosition, endPointX, endPointY,
+							direction.getDirection().get(i));
+
+					if (nextPosition != null) {
+
+						mainQueue.addLast(nextPosition);
+						mazeMapPositions[nextPosition.getCoordinateHorizontal()][nextPosition
+								.getCoordinateVertical()] = new Position(currentPosition.getCoordinateHorizontal(),
+										currentPosition.getCoordinateVertical(), direction.getDirection().get(i));
+
+						// check if the end point is reached
+						if (nextPosition.getCoordinateVertical() == endPointY
+								&& nextPosition.getCoordinateHorizontal() == endPointX) {
+							Position tempPosition = nextPosition;
+							int count = 0;
+
+							// back track to the start point
+							while (tempPosition != startPosition) {
+
+								Position currentNode = new Position(tempPosition.getCoordinateHorizontal() + 1,
+										tempPosition.getCoordinateVertical() + 1);
+
+								// add path points & directions to the created array-lists
+								path.add(currentNode);
+								directions.add(tempPosition.getDir());
+
+								count++;
+								tempPosition = mazeMapPositions[tempPosition.getCoordinateHorizontal()][tempPosition
+										.getCoordinateVertical()];
+							}
+							return count - 1;
+						}
+					}
+				}
+			}
+		}
+
+		System.out.println("No Path Found!");
+		return -1;
+	}
+
+	/* this method will navigate through a given direction until a barrier hits */
+	public static Position navigate(int[][] maze, Position[][] mazeMapPositions, Position currentPosition,
+			int endPointX, int endPointY, String direction) {
+		int xCoordinate = currentPosition.getCoordinateHorizontal();
+		int yCoordinate = currentPosition.getCoordinateVertical();
+		currentPosition.setDir(direction);
+
+		int xAxisDifference = 0;
+		int yAxisDifference = 0;
+
+		// Determine direction differences
+		switch (direction) {
+		case "LEFT":
+			xAxisDifference = -1;
+			break;
+		case "RIGHT":
+			xAxisDifference = 1;
+			break;
+		case "UP":
+			yAxisDifference = -1;
+			break;
+		case "DOWN":
+			yAxisDifference = 1;
+			break;
+		}
+
+		// Move in the given direction until a barrier is hit
+		int increment = 1;
+		while (isValidMove(xCoordinate + increment * xAxisDifference, yCoordinate + increment * yAxisDifference,
+				maze)) {
+			int nextX = xCoordinate + increment * xAxisDifference;
+			int nextY = yCoordinate + increment * yAxisDifference;
+
+			// Check if the end point is reached
+			if (nextX == endPointX && nextY == endPointY) {
+				return new Position(endPointX, endPointY, direction);
+			}
+
+			increment++;
+		}
+
+		increment--; // Revert to the previous step
+
+		// Check if the position has been visited before
+		if (mazeMapPositions[xCoordinate + increment * xAxisDifference][yCoordinate
+				+ increment * yAxisDifference] != null) {
+			return null;
+		}
+
+		return new Position(xCoordinate + increment * xAxisDifference, yCoordinate + increment * yAxisDifference,
+				direction);
+	}
+
+	/* Helper method to check if the move is valid */
+	private static boolean isValidMove(int x, int y, int[][] maze) {
+		return x >= 0 && x < maze[0].length && y >= 0 && y < maze.length && maze[y][x] != 1;
+	}
+
+	/* this method will print the found path  */
+	public static void printResult(List<Position> path, List<String> directions, int moveCount) {
+		if (!path.isEmpty() && !directions.isEmpty() && moveCount >= 0) {
+			System.out.println(moveCount + " moves\n");
+			System.out.println("Start at (" + path.get(0).getCoordinateHorizontal() + ","
+					+ path.get(0).getCoordinateVertical() + ")");
+
+			for (int i = 1; i < path.size(); i++) {
+				System.out.println("Move " + directions.get(i - 1) + " to (" + path.get(i).getCoordinateHorizontal()
+						+ "," + path.get(i).getCoordinateVertical() + ")");
+			}
+
+			System.out.println("Done!\n");
+		}
+	}
+}
